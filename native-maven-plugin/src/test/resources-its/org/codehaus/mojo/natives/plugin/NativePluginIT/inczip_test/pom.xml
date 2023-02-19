@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.codehaus.mojo.natives.plugin</groupId>
+  <artifactId>libcircle</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>a</packaging>
+  
+  <properties>
+    <native.source.dir>src</native.source.dir>
+    <native.include.dir>include</native.include.dir>
+    <commonCompilerOptions></commonCompilerOptions>
+  </properties>
+  
+  <dependencies>
+	  <dependency>
+        <groupId>org.codehaus.mojo.natives.plugin</groupId>
+        <artifactId>libpoint</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <type>inczip</type>
+	  </dependency>
+	  <dependency>
+        <groupId>org.codehaus.mojo.natives.plugin</groupId>
+        <artifactId>libpoint</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <type>a</type>
+	  </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>native-maven-plugin</artifactId>
+        <version>@project.version@</version>
+        <extensions>true</extensions>
+        <configuration>
+          <compilerStartOptions>
+            <compilerStartOption>${commonCompilerOptions}</compilerStartOption>
+          </compilerStartOptions>
+          
+          <sources>
+            <source>
+              <directory>${native.source.dir}</directory>
+               <includes>
+                 <include>**/*.cc</include>
+               </includes>
+            </source>  
+            <source>
+              <directory>${native.include.dir}</directory>
+              <deployable>true</deployable>
+            </source>            
+          </sources>
+            
+          <linkerProvider>ar</linkerProvider>
+          <linkerStartOptions>
+            <linkerStartOption>-r</linkerStartOption>
+          </linkerStartOptions>
+          
+        </configuration>
+
+        <!-- ranlib the output of the linker, ie the static lib -->
+        <executions>
+          <execution>
+            <id>ranlib</id>
+            <phase>package</phase>
+            <goals>
+              <goal>ranlib</goal>
+            </goals>
+          </execution>
+        </executions>
+      
+      </plugin>
+
+    </plugins>    
+
+  </build>
+    
+</project>

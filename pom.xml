@@ -16,7 +16,7 @@
       <id>dtran</id>
       <name>Dan T. Tran</name>
       <email>dantran@gmail.com</email>
-      <organization />
+      <organization/>
       <roles>
         <role>Lead Developer</role>
       </roles>
@@ -168,14 +168,61 @@
         <artifactId>plexus-utils</artifactId>
         <version>3.5.0</version>
       </dependency>
+      <dependency>
+        <groupId>com.soebes.itf.jupiter.extension</groupId>
+        <artifactId>itf-assertj</artifactId>
+        <version>0.12.0</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.soebes.itf.jupiter.extension</groupId>
+        <artifactId>itf-jupiter-extension</artifactId>
+        <version>0.12.0</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-core</artifactId>
+        <version>3.24.2</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>5.9.2</version>
+        <scope>test</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
   <dependencies>
+    <dependency>
+      <groupId>com.soebes.itf.jupiter.extension</groupId>
+      <artifactId>itf-assertj</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.soebes.itf.jupiter.extension</groupId>
+      <artifactId>itf-jupiter-extension</artifactId>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
   <build>
     <pluginManagement>
@@ -189,6 +236,12 @@
           <groupId>org.codehaus.plexus</groupId>
           <artifactId>plexus-component-metadata</artifactId>
           <version>2.1.1</version>
+        </plugin>
+
+        <plugin>
+          <groupId>com.soebes.itf.jupiter.extension</groupId>
+          <artifactId>itf-maven-plugin</artifactId>
+          <version>0.12.0</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -217,6 +270,57 @@
           </execution>
         </executions>
       </plugin>
+      <!-- 
+       ! Used to perform integration tests
+      -->
+      <plugin>
+        <groupId>com.soebes.itf.jupiter.extension</groupId>
+        <artifactId>itf-maven-plugin</artifactId>
+        <configuration>
+          <nonFilteredFileExtensions>
+            <nonFilteredFileExtension>a</nonFilteredFileExtension>
+            <nonFilteredFileExtension>inczip</nonFilteredFileExtension>
+          </nonFilteredFileExtensions>
+        </configuration>
+        <executions>
+          <execution>
+            <id>Perform Integration Tests</id>
+            <goals>
+              <goal>install</goal>
+              <goal>resources-its</goal>
+            </goals>
+            <phase>pre-integration-test</phase>
+          </execution>
+        </executions>
+      </plugin>
+      <!--
+       ! currently needed to run integration tests.
+      -->
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <configuration>
+          <systemProperties>
+            <maven.version>${maven.version}</maven.version>
+            <maven.home>${maven.home}</maven.home>
+          </systemProperties>
+          <properties>
+            <configurationParameters>junit.jupiter.execution.parallel.enabled=true
+              junit.jupiter.execution.parallel.mode.default=concurrent
+              junit.jupiter.execution.parallel.mode.classes.default=same_thread
+              junit.jupiter.execution.parallel.config.strategy=fixed
+              junit.jupiter.execution.parallel.config.fixed.parallelism=6</configurationParameters>
+          </properties>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
   </build>
   <profiles>
@@ -252,7 +356,7 @@
                         </goals>
                       </pluginExecutionFilter>
                       <action>
-                        <ignore />
+                        <ignore/>
                       </action>
                     </pluginExecution>
                   </pluginExecutions>

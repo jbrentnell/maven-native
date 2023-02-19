@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>org.codehaus.mojo.natives.plugin</groupId>
+  <artifactId>libcircle</artifactId>
+  <versioning>
+    <lastUpdated>20230217124630</lastUpdated>
+    <snapshot>
+      <localCopy>true</localCopy>
+    </snapshot>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>0.0.1-SNAPSHOT</value>
+        <updated>20230217124630</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>a</extension>
+        <value>0.0.1-SNAPSHOT</value>
+        <updated>20230217124630</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>inczip</extension>
+        <value>0.0.1-SNAPSHOT</value>
+        <updated>20230217124630</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+  <version>0.0.1-SNAPSHOT</version>
+</metadata>
